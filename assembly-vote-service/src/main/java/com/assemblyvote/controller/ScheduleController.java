@@ -26,16 +26,16 @@ public class ScheduleController {
     return ResponseEntity.ok(ApiResponse.of(scheduleService.findAll(pageable)));
   }
 
-
   @GetMapping("/{id}")
   public ResponseEntity<ApiResponse> findById(@PathVariable Long id) {
     try {
       return ResponseEntity.ok(ApiResponse.of(scheduleService.findById(id)));
     } catch (NotExistsException e) {
-      return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ApiResponse.of(e.getMessage()));
+      return ResponseEntity.status(e.getStatus())
+          .body(ApiResponse.of(e.getStatus(), e.getMessage()));
     }
   }
-  
+
   @PostMapping()
   public ResponseEntity<ApiResponse> createSchedule(
       @Valid @RequestBody ScheduleDTO scheduleDTO, BindingResult result) {
@@ -46,9 +46,9 @@ public class ScheduleController {
 
     try {
       return ResponseEntity.status(HttpStatus.CREATED)
-          .body(ApiResponse.of(scheduleService.createSchedule(scheduleDTO)));
+          .body(ApiResponse.of(HttpStatus.CREATED, scheduleService.createSchedule(scheduleDTO)));
     } catch (ExistsException e) {
-      return ResponseEntity.badRequest().body(ApiResponse.of(e.getMessage()));
+      return ResponseEntity.badRequest().body(ApiResponse.of(e.getStatus(), e.getMessage()));
     }
   }
 }
