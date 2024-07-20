@@ -25,4 +25,8 @@ public class AssociateService {
   public Optional<Associate> findByCpf(String cpf) {
     return associateRepository.findByCpf(cpf);
   }
+
+  public Optional<Associate> findById(Long id) {
+    return associateRepository.findById(id);
+  }
 }
