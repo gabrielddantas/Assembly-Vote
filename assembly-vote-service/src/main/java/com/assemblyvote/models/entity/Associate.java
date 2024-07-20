@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "associates")
+@Table(name = "associates", schema = "assembly_associates")
 public class Associate {
 
   @Id

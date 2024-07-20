@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "schedules")
+@Table(name = "schedules", schema = "assembly")
 public class Schedule {
 
   @Id
