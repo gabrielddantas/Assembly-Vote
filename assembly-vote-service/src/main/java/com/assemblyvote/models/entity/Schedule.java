@@ -23,4 +23,8 @@ public class Schedule {
 
   @Column(name = "description", nullable = false)
   private String description;
+
+  @ManyToOne
+  @JoinColumn(name = "session_id", nullable = false)
+  private Session session;
 }

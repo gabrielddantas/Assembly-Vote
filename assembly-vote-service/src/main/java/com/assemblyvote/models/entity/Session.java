@@ -1,5 +1,6 @@
 package com.assemblyvote.models.entity;
 
+import com.assemblyvote.utils.DateUtils;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,12 +23,8 @@ public class Session {
   private Long id;
 
   @Column(name = "create_at")
-  private LocalDateTime createAt = LocalDateTime.now();
+  private LocalDateTime createAt = DateUtils.nowLocalDateTime();
 
   @Column(name = "expires_in")
-  private Integer expiresIn = 1;
-
-  @OneToMany
-  @JoinColumn(name = "session_id", nullable = false)
-  private List<Schedule> schedules;
+  private LocalDateTime expiresIn = DateUtils.nowPlusMinutesLocalDateTime(1L);
 }
