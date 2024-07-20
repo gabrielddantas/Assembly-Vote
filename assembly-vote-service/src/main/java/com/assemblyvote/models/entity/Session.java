@@ -14,7 +14,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "sessions")
+@Table(name = "sessions", schema = "assembly")
 public class Session {
 
   @Id
