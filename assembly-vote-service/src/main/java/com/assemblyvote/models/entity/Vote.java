@@ -21,7 +21,7 @@ public class Vote {
   @Column(name = "vote", nullable = false)
   private Boolean vote;
 
-  @OneToOne
+  @ManyToOne
   @JoinColumn(name = "associate_id", nullable = false)
   private Associate associate;
 
