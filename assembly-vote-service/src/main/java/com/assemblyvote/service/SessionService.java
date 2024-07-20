@@ -28,7 +28,7 @@ public class SessionService {
     return sessionRepository.findById(id);
   }
 
-  public Session create(SessionDTO sessionDTO) {
+  public Session createOrGetCurrentSession(SessionDTO sessionDTO) {
     return sessionRepository
         .findOpenedSessionNow(DateUtils.nowLocalDateTime())
         .orElseGet(() -> sessionRepository.save(SessionConverter.toEntity(sessionDTO)));
