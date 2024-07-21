@@ -1,15 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
 
-import { Container, Wrapper, Title, MUIStyles } from "./styles";
+import { Container, Wrapper, Title, Text, MUIStyles } from "./styles";
 import { Api, handleErrorMessages } from "../../config/axios.config";
 import { ApiResponse } from "../../models/general/api-response.interface";
 import {
+  getStorageData,
   keyStorage,
   setStorageData,
 } from "../../services/session-storage.service";
@@ -33,6 +35,7 @@ export const Login = () => {
   });
 
   const [isRegistered, setIsRegistered] = React.useState(true);
+  const navigate = useNavigate();
 
   const handleVerifyIfIsRegistered = async ({ cpf }: { cpf: string }) => {
     try {
@@ -45,6 +48,7 @@ export const Login = () => {
       }
 
       setStorageData(keyStorage.associate, data.data);
+      navigate("/");
     } catch (error) {
       handleErrorMessages(error);
     }
@@ -58,6 +62,7 @@ export const Login = () => {
       );
 
       setStorageData(keyStorage.associate, response.data);
+      navigate("/");
     } catch (error) {
       handleErrorMessages(error);
     }
@@ -121,6 +126,13 @@ export const Login = () => {
           >
             {!isRegistered ? "Registrar" : "Entrar"}
           </Button>
+          <Text
+            onClick={() => {
+              isRegistered ? setIsRegistered(false) : setIsRegistered(true);
+            }}
+          >
+            {isRegistered ? "Não possui uma conta?" : "Já possui uma conta?"}
+          </Text>
         </Wrapper>
       </Container>
     </>
