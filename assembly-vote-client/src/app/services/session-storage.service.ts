@@ -5,10 +5,19 @@ export const keyStorage = {
 };
 
 export const setStorageData = (key: string, data: any) => {
-  sessionStorage.setItem(defaultStorageName + key, JSON.stringify(data));
+  try {
+    sessionStorage.setItem(defaultStorageName + key, JSON.stringify(data));
+    return true;
+  } catch (error) {
+    throw new Error("Error setting storage data");
+  }
 };
 
 export const getStorageData = (key: string) => {
-  const data = sessionStorage.getItem(defaultStorageName + key);
-  return data ? JSON.parse(data) : null;
+  try {
+    const data = sessionStorage.getItem(defaultStorageName + key);
+    return data ? JSON.parse(data) : null;
+  } catch (error) {
+    return null;
+  }
 };
