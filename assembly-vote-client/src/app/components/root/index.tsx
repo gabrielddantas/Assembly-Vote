@@ -1,6 +1,7 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
-import { AppBar, Button, Toolbar, Typography } from "@mui/material";
+import { AppBar, Box, Button, Toolbar, Typography } from "@mui/material";
+import Modal from "@mui/material/Modal";
 import {
   ContainerMobile,
   WrapperMobileContent,
@@ -16,9 +17,14 @@ import {
   getStorageData,
   keyStorage,
 } from "../../services/session-storage.service";
+import { ScheduleRegister } from "../modal/schedule-register";
 
 export const Root = ({ children }: { children: JSX.Element }) => {
+  const [openModal, setOpenNodal] = useState(false);
   const [associateName, setAssociateName] = React.useState<string>("");
+
+  const handleOpenModal = () => setOpenNodal(true);
+  const handleCloseModal = () => setOpenNodal(false);
 
   useEffect(() => {
     setAssociateName(getAssociateName());
@@ -44,13 +50,33 @@ export const Root = ({ children }: { children: JSX.Element }) => {
 
   return (
     <>
+      <Modal
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+        open={openModal}
+        onClose={handleCloseModal}
+      >
+        <Box
+          sx={{
+            display: "flex",
+            width: "100%",
+            height: "100%",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <ScheduleRegister handleCloseModal={() => handleCloseModal()} />
+        </Box>
+      </Modal>
       <ContainerMobile>
         <AppBar position="static">
           <Toolbar>
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
               {associateName}
             </Typography>
-            <Button color="inherit">Cadastrar pauta</Button>
+            <Button color="inherit" onClick={handleOpenModal}>
+              Cadastrar pauta
+            </Button>
           </Toolbar>
         </AppBar>
         <WrapperMobileContent>{children}</WrapperMobileContent>
@@ -87,6 +113,7 @@ export const Root = ({ children }: { children: JSX.Element }) => {
                 variant="contained"
                 endIcon={<AddToPhotosIcon />}
                 type="button"
+                onClick={handleOpenModal}
               >
                 Cadastrar pauta
               </Button>
