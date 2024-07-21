@@ -50,3 +50,14 @@ export const Title = styled.p`
 
   margin-bottom: 30px;
 `;
+
+export const Text = styled.a`
+  color: ${colors.silverSand};
+  font-size: 14px;
+  font-weight: 400;
+  cursor: pointer;
+
+  &:hover {
+    color: ${colors.deepSeaBlue};
+  }
+`;
