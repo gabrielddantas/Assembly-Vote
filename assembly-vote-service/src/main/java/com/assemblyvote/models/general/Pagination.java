@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 @AllArgsConstructor
 public class Pagination {
     private int size;
+    private int page;
     private int numberOfElements;
     private int numberOfPages;
     private Long totalNumberOfElements;
@@ -29,6 +30,7 @@ public class Pagination {
                 .isLastPage(page.isLast())
                 .hasNextPage(page.hasNext())
                 .hasPreviousPage(page.hasPrevious())
+                .page(pageable.getPageNumber())
                 .build();
     }
 
