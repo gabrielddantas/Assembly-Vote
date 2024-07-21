@@ -1,3 +1,5 @@
+@import "toastr";
+
 html,
 body,
 div,
@@ -86,6 +88,11 @@ video {
   font: inherit;
   vertical-align: baseline;
 }
+
+body {
+  background-color: #f5f5f5;
+}
+
 /* HTML5 display-role reset for older browsers */
 article,
 aside,
