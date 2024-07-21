@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import type { Router } from "@remix-run/router";
 import { LoginRoute, ProtectedRoute } from "./routes.verification";
 import { Root } from "./app/components/root";
+import { Session } from "./app/pages/session";
 
 const Main = () => {
   return <p>Hello World</p>;
@@ -15,9 +16,13 @@ export const router: Router = createBrowserRouter([
   {
     path: "/",
     element: (
-      <Root>
-        <Main />
-      </Root>
+      <ProtectedRoute
+        component={
+          <Root>
+            <Session />
+          </Root>
+        }
+      />
     ),
   },
 ]);

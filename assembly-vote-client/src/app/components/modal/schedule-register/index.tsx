@@ -23,29 +23,25 @@ const schema = yup.object().shape({
 export const ScheduleRegister = ({
   handleCloseModal,
 }: {
-  handleCloseModal: () => void;
+  handleCloseModal: (scheduleRegistered: boolean) => void;
 }) => {
   const {
     handleSubmit,
     control,
     formState: { errors },
-    watch,
   } = useForm({
     resolver: yupResolver(schema),
   });
 
   const handleRegisterSchedule = async (data: any) => {
     try {
-      const { data: response } = await Api.post<ApiResponse<IScheduleProps>>(
-        "/schedules",
-        data
-      );
+      await Api.post<ApiResponse<IScheduleProps>>("/schedules", data);
 
       toastr(
         { message: "Pauta cadastrada com sucesso", title: "Sucesso" },
         "success"
       );
-      handleCloseModal();
+      handleCloseModal(true);
     } catch (error) {
       handleErrorMessages(error);
     }
@@ -54,7 +50,7 @@ export const ScheduleRegister = ({
   return (
     <Container>
       <Wrapper>
-        <div className="close" onClick={handleCloseModal}>
+        <div className="close" onClick={() => handleCloseModal(false)}>
           <CloseIcon
             sx={{
               fontSize: 32,
