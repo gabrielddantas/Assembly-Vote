@@ -3,7 +3,7 @@ import {
   getStorageData,
   keyStorage,
 } from "./app/services/session-storage.service";
-import { Login } from "@mui/icons-material";
+import { Login } from "./app/pages/Login";
 
 export const ProtectedRoute = ({
   component: Component,
