@@ -1,5 +1,6 @@
 package com.assemblyvote.service;
 
+import com.assemblyvote.exception.BadRequestException;
 import com.assemblyvote.exception.ExistsException;
 import com.assemblyvote.exception.NoValuePresentException;
 import com.assemblyvote.exception.NotExistsException;
@@ -13,6 +14,7 @@ import com.assemblyvote.models.response.ScheduleResponse;
 import com.assemblyvote.models.specification.VoteSpecification;
 import com.assemblyvote.repository.ScheduleRepository;
 import com.assemblyvote.repository.VoteRepository;
+import com.assemblyvote.utils.DateUtils;
 import com.assemblyvote.utils.converters.PaginationConverter;
 import com.assemblyvote.utils.converters.VoteConverter;
 import lombok.RequiredArgsConstructor;
@@ -53,7 +55,7 @@ public class VoteService {
   }
 
   public Vote createVote(VoteDTO vote)
-      throws NotExistsException, ExistsException, NoValuePresentException {
+      throws NotExistsException, ExistsException, NoValuePresentException, BadRequestException {
     if (Objects.isNull(vote.getAssociateId()) || Objects.isNull(vote.getScheduleId())) {
       throw new NoValuePresentException("Alguma coisa deu errado, tente novamente.");
     }
@@ -72,6 +74,10 @@ public class VoteService {
             .findById(vote.getScheduleId())
             .orElseThrow(() -> new NotExistsException("Pauta não encontrada."));
 
+    if (verifyIfScheduleIsExpires(schedule)) {
+      throw new BadRequestException("Sessão de votação encerrada.");
+    }
+
     return voteRepository.save(VoteConverter.toEntity(vote, associate, schedule));
   }
 
@@ -86,5 +92,9 @@ public class VoteService {
         disapproved,
         VoteMap.TOTAL.name(),
         approved + disapproved);
+  }
+
+  private boolean verifyIfScheduleIsExpires(Schedule schedule) {
+    return schedule.getSession().getExpiresIn().isBefore(DateUtils.nowLocalDateTime());
   }
 }

@@ -1,5 +1,6 @@
 package com.assemblyvote.controller;
 
+import com.assemblyvote.exception.BadRequestException;
 import com.assemblyvote.exception.ExistsException;
 import com.assemblyvote.exception.NoValuePresentException;
 import com.assemblyvote.exception.NotExistsException;
@@ -59,6 +60,9 @@ public class VoteController {
       return ResponseEntity.status(e.getStatus())
           .body(ApiResponse.of(e.getStatus(), e.getMessage()));
     } catch (ExistsException e) {
+      return ResponseEntity.status(e.getStatus())
+          .body(ApiResponse.of(e.getStatus(), e.getMessage()));
+    } catch (BadRequestException e) {
       return ResponseEntity.status(e.getStatus())
           .body(ApiResponse.of(e.getStatus(), e.getMessage()));
     } catch (Exception e) {
