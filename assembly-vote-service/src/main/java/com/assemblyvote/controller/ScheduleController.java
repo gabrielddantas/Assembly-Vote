@@ -21,9 +21,10 @@ public class ScheduleController {
 
   private final ScheduleService scheduleService;
 
-  @GetMapping()
-  public ResponseEntity<ApiResponse> findAll(@PageableDefault(size = 10) Pageable pageable) {
-    return ResponseEntity.ok(ApiResponse.of(scheduleService.findAll(pageable)));
+  @GetMapping("/by-session/{sessionId}")
+  public ResponseEntity<ApiResponse> findAll(
+      @PathVariable("sessionId") Long sessionId, @PageableDefault(size = 10) Pageable pageable) {
+    return ResponseEntity.ok(ApiResponse.of(scheduleService.findAll(sessionId, pageable)));
   }
 
   @GetMapping("/{id}")

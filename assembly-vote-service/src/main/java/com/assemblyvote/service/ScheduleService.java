@@ -24,8 +24,8 @@ public class ScheduleService {
   private final SessionService sessionService;
   private final VoteService voteService;
 
-  public PaginatedData<ScheduleResponse> findAll(Pageable pageable) {
-    Page<Schedule> schedules = scheduleRepository.findAll(pageable);
+  public PaginatedData<ScheduleResponse> findAll(Long sessionId, Pageable pageable) {
+    Page<Schedule> schedules = scheduleRepository.findAllBySessionId(sessionId, pageable);
 
     return PaginationConverter.toPaginatedData(
         schedules.map(
