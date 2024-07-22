@@ -23,9 +23,9 @@ export const SessionCard = ({ data }: { data: ISessionProps }) => {
   };
 
   return (
-    <Container to={""}>
+    <Container to={`/pauta/${data.id}`}>
       <WrapperBasicInformation hasexpires={String(hasExpired(data.expiresIn))}>
-        <h2>#{data.id}</h2>
+        <h2>N°{data.id}</h2>
         <span>{hasExpired(data.expiresIn) ? "Ativo" : "Expirado"}</span>
       </WrapperBasicInformation>
 
@@ -37,7 +37,7 @@ export const SessionCard = ({ data }: { data: ISessionProps }) => {
         </div>
         <div className="linha-vertical"></div>
         <div>
-          <strong>Expira em:</strong>
+          <strong>Data expiração:</strong>
           <p>{splitDateAndTime(formatDateTime(new Date(data.expiresIn)))[0]}</p>
           <p>{splitDateAndTime(formatDateTime(new Date(data.expiresIn)))[1]}</p>
         </div>
