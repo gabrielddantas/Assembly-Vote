@@ -34,7 +34,7 @@ export const Container = styled(Link)`
       gap: 5px;
 
       strong {
-        font-size: 20px;
+        font-size: 18px;
         color: ${colors.deepSeaBlue};
       }
 
