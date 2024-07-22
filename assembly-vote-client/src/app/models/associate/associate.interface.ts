@@ -3,3 +3,7 @@ export interface IAssociateProps {
   name?: string;
   cpf: string;
 }
+
+export interface IAssociateComponentProps extends IAssociateProps {
+  vote: boolean;
+}
