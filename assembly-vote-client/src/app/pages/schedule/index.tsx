@@ -143,7 +143,7 @@ export const Schedule = () => {
         <WrapperScroll>
           <div className="wrapper-cards">
             {schedules.length > 0 ? (
-              <ScheduleTable schedules={schedules} />
+              <ScheduleTable schedulesProps={schedules} />
             ) : (
               <Typography
                 sx={{

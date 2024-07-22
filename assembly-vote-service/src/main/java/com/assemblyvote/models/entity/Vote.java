@@ -25,7 +25,7 @@ public class Vote {
   @JoinColumn(name = "associate_id", nullable = false)
   private Associate associate;
 
-  @OneToOne
+  @ManyToOne
   @JoinColumn(name = "schedule_id", nullable = false)
   private Schedule schedule;
 }

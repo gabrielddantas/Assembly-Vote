@@ -17,6 +17,11 @@ export const SessionCard = ({ data }: { data: ISessionProps }) => {
     return date.split(" ");
   };
 
+  const padStartInHours = (hours: string) => {
+    const [hour, minutes] = hours.split(":");
+    return `${hour.padStart(2, "0")}:${minutes.padStart(2, "0")}`;
+  };
+
   const hasExpired = (expiresIn: string) => {
     const date = new Date(expiresIn);
     return date > new Date();
@@ -33,13 +38,21 @@ export const SessionCard = ({ data }: { data: ISessionProps }) => {
         <div>
           <strong>Criado em:</strong>
           <p>{splitDateAndTime(formatDateTime(new Date(data.createAt)))[0]}</p>
-          <p>{splitDateAndTime(formatDateTime(new Date(data.createAt)))[1]}</p>
+          <p>
+            {padStartInHours(
+              splitDateAndTime(formatDateTime(new Date(data.createAt)))[1]
+            )}
+          </p>
         </div>
         <div className="linha-vertical"></div>
         <div>
           <strong>Data expiração:</strong>
           <p>{splitDateAndTime(formatDateTime(new Date(data.expiresIn)))[0]}</p>
-          <p>{splitDateAndTime(formatDateTime(new Date(data.expiresIn)))[1]}</p>
+          <p>
+            {padStartInHours(
+              splitDateAndTime(formatDateTime(new Date(data.expiresIn)))[1]
+            )}
+          </p>
         </div>
       </div>
     </Container>

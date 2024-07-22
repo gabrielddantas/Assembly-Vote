@@ -1,7 +1,7 @@
 import { ISessionProps } from "../session/session.interface";
 
 export interface IScheduleProps {
-  id: string;
+  id: number;
   title: string;
   description: string;
   session: ISessionProps;
