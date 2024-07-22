@@ -6,3 +6,9 @@ export interface IScheduleProps {
   description: string;
   session: ISessionProps;
 }
+
+export interface IScheduleResponseProps extends IScheduleProps {
+  totalVotes: number;
+  approvedVotes: number;
+  disapprovedVotes: number;
+}
