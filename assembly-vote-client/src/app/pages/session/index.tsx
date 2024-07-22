@@ -17,6 +17,7 @@ import {
 } from "../../models/general/pagination.interface";
 import { SessionCard } from "../../components/session-card";
 import { ScheduleRegister } from "../../components/modal/schedule-register";
+import { IScheduleProps } from "../../models/schedule/schedule.interface";
 
 export const Session = () => {
   const [openModal, setOpenModal] = useState(false);
@@ -53,9 +54,7 @@ export const Session = () => {
     setOpenModal(true);
   };
 
-  const handleCloseModal = (scheduleRegistered: boolean) => {
-    console.log(scheduleRegistered);
-
+  const handleCloseModal = (scheduleRegistered: IScheduleProps | null) => {
     if (scheduleRegistered) {
       getSessions();
     }
@@ -64,7 +63,7 @@ export const Session = () => {
 
   return (
     <Container>
-      <Modal open={openModal} onClose={handleCloseModal}>
+      <Modal open={openModal} onClose={() => handleCloseModal(null)}>
         <Box
           sx={{
             display: "flex",
