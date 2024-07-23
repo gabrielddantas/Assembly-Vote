@@ -10,7 +10,7 @@ services:
     networks:
       - application-network
 
-  service:
+  assembly-vote-service:
     build:
       context: ./assembly-vote-service
       dockerfile: Dockerfile
@@ -19,16 +19,16 @@ services:
       - "8080:8080"
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/db_assembly_vote
-      - origin_validation=http://service2:3001/api
+      - origin_validation=http://assembly-cpf-service:3001/api
     depends_on:
       db:
         condition: service_healthy
-      service2:
+      assembly-cpf-service:
         condition: service_started
     networks:
       - application-network
 
-  service2:
+  assembly-cpf-service:
     build:
       context: ./assembly-cpf-service
       dockerfile: Dockerfile
