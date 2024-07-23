@@ -1,3 +1,9 @@
+# Documentação
+
+```
+  http://localhost:8080/api/swagger-ui/index.html
+```
+
 # Votação
 
 ## Objetivo
@@ -76,11 +82,10 @@ Exemplos de retorno do serviço
 - Teste bem sua solução, evite bugs
 
   Observações importantes
+
 - Não inicie o teste sem sanar todas as dúvidas
 - Iremos executar a aplicação para testá-la, cuide com qualquer dependência externa e
   deixe claro caso haja instruções especiais para execução do mesmo
   Classificação da informação: Uso Interno
-
-
 
 # desafio-votacao
