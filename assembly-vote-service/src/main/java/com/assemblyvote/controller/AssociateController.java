@@ -1,6 +1,8 @@
 package com.assemblyvote.controller;
 
 import com.assemblyvote.exception.ExistsException;
+import com.assemblyvote.models.general.ErrorMessage;
+import com.assemblyvote.utils.LogUtils;
 import com.assemblyvote.utils.converters.AssociateConverter;
 import com.assemblyvote.models.dto.AssociateDTO;
 import com.assemblyvote.models.entity.Associate;
@@ -26,7 +28,14 @@ public class AssociateController {
         associateService
             .findByCpf(cpf)
             .map(ApiResponse::of)
-            .orElse(ApiResponse.of(HttpStatus.NOT_FOUND, "Associado não encontrado"));
+            .orElse(ApiResponse.of(HttpStatus.NOT_FOUND, "Associado não encontrado."));
+
+    if (response.getStatus() == HttpStatus.NOT_FOUND.value()) {
+      LogUtils.messageExceptions(
+          ErrorMessage.from(
+              "GET", response.getStatus(), response.getMessage(), "/associates/exists/{cpf}"),
+          this.getClass());
+    }
 
     return ResponseEntity.ok(response);
   }
@@ -46,6 +55,9 @@ public class AssociateController {
                   HttpStatus.CREATED,
                   associateService.save(AssociateConverter.toEntity(associate))));
     } catch (ExistsException e) {
+      LogUtils.messageExceptions(
+          ErrorMessage.from("POST", e.getStatus().value(), e.getMessage(), "/associates"),
+          this.getClass());
       return ResponseEntity.badRequest().body(ApiResponse.of(e.getStatus(), e.getMessage()));
     }
   }

@@ -5,9 +5,11 @@ import com.assemblyvote.exception.ExistsException;
 import com.assemblyvote.exception.NoValuePresentException;
 import com.assemblyvote.exception.NotExistsException;
 import com.assemblyvote.models.dto.VoteDTO;
+import com.assemblyvote.models.general.ErrorMessage;
 import com.assemblyvote.models.response.ApiResponse;
 import com.assemblyvote.models.specification.VoteSpecification;
 import com.assemblyvote.service.VoteService;
+import com.assemblyvote.utils.LogUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -30,9 +32,16 @@ public class VoteController {
       return ResponseEntity.ok(
           ApiResponse.of(voteService.getAllVotesBySchedule(specification, pageable)));
     } catch (NotExistsException e) {
+      LogUtils.messageExceptions(
+          ErrorMessage.from("GET", e.getStatus().value(), e.getMessage(), "/votes/schedule"),
+          this.getClass());
       return ResponseEntity.status(e.getStatus())
           .body(ApiResponse.of(e.getStatus(), e.getMessage()));
     } catch (Exception e) {
+      LogUtils.messageExceptions(
+          ErrorMessage.from(
+              "GET", HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage(), "/votes/schedule"),
+          this.getClass());
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
           .body(
               ApiResponse.of(
@@ -45,6 +54,10 @@ public class VoteController {
     try {
       return ResponseEntity.ok(ApiResponse.of(voteService.hasVoted(associateId, scheduleId)));
     } catch (Exception e) {
+      LogUtils.messageExceptions(
+          ErrorMessage.from(
+              "GET", HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage(), "/votes/has-voted"),
+          this.getClass());
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
           .body(
               ApiResponse.of(
@@ -57,15 +70,28 @@ public class VoteController {
     try {
       return ResponseEntity.ok(ApiResponse.of(voteService.createVote(vote)));
     } catch (NotExistsException e) {
+      LogUtils.messageExceptions(
+          ErrorMessage.from("POST", e.getStatus().value(), e.getMessage(), "/votes"),
+          this.getClass());
       return ResponseEntity.status(e.getStatus())
           .body(ApiResponse.of(e.getStatus(), e.getMessage()));
     } catch (ExistsException e) {
+      LogUtils.messageExceptions(
+          ErrorMessage.from("POST", e.getStatus().value(), e.getMessage(), "/votes"),
+          this.getClass());
       return ResponseEntity.status(e.getStatus())
           .body(ApiResponse.of(e.getStatus(), e.getMessage()));
     } catch (BadRequestException e) {
+      LogUtils.messageExceptions(
+          ErrorMessage.from("POST", e.getStatus().value(), e.getMessage(), "/votes"),
+          this.getClass());
       return ResponseEntity.status(e.getStatus())
           .body(ApiResponse.of(e.getStatus(), e.getMessage()));
     } catch (Exception e) {
+      LogUtils.messageExceptions(
+          ErrorMessage.from(
+              "POST", HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage(), "/votes"),
+          this.getClass());
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
           .body(
               ApiResponse.of(

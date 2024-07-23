@@ -3,8 +3,10 @@ package com.assemblyvote.controller;
 import com.assemblyvote.exception.ExistsException;
 import com.assemblyvote.exception.NotExistsException;
 import com.assemblyvote.models.dto.ScheduleDTO;
+import com.assemblyvote.models.general.ErrorMessage;
 import com.assemblyvote.models.response.ApiResponse;
 import com.assemblyvote.service.ScheduleService;
+import com.assemblyvote.utils.LogUtils;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -32,6 +34,9 @@ public class ScheduleController {
     try {
       return ResponseEntity.ok(ApiResponse.of(scheduleService.findById(id)));
     } catch (NotExistsException e) {
+      LogUtils.messageExceptions(
+          ErrorMessage.from("GET", e.getStatus().value(), e.getMessage(), "/schedules/{id}"),
+          this.getClass());
       return ResponseEntity.status(e.getStatus())
           .body(ApiResponse.of(e.getStatus(), e.getMessage()));
     }
@@ -49,6 +54,9 @@ public class ScheduleController {
       return ResponseEntity.status(HttpStatus.CREATED)
           .body(ApiResponse.of(HttpStatus.CREATED, scheduleService.createSchedule(scheduleDTO)));
     } catch (ExistsException e) {
+      LogUtils.messageExceptions(
+          ErrorMessage.from("POST", e.getStatus().value(), e.getMessage(), "/schedules"),
+          this.getClass());
       return ResponseEntity.badRequest().body(ApiResponse.of(e.getStatus(), e.getMessage()));
     }
   }
