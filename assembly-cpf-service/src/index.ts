@@ -21,7 +21,8 @@ app.use(BodyParser.urlencoded({ extended: true }));
 
 app.get("/api/cpf/valid/:cpf", (req: Request, res: Response) => {
   const { cpf } = req.params;
-  console.log(cpf);
+
+  console.log("[VALIDATE CPF] - CPF: ", cpf);
 
   if (!cpf || cpf === "" || cpf.length < 11) {
     return res.status(404).json({ status: Vote.unableToVote });
@@ -33,7 +34,7 @@ app.get("/api/cpf/valid/:cpf", (req: Request, res: Response) => {
 
   let randomNumber = getRandomInt(0, 10);
 
-  if (randomNumber < 3) {
+  if (randomNumber < 5) {
     return res.status(404).json({ status: Vote.unableToVote });
   }
 

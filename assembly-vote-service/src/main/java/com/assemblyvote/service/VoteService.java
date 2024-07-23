@@ -4,7 +4,6 @@ import com.assemblyvote.exception.BadRequestException;
 import com.assemblyvote.exception.ExistsException;
 import com.assemblyvote.exception.NoValuePresentException;
 import com.assemblyvote.exception.NotExistsException;
-import com.assemblyvote.http.ValidateCPF;
 import com.assemblyvote.http.ValidateCPFService;
 import com.assemblyvote.models.dto.VoteDTO;
 import com.assemblyvote.models.entity.Associate;
@@ -33,7 +32,6 @@ public class VoteService {
   private final ScheduleRepository scheduleRepository;
   private final AssociateService associateService;
   private final ValidateCPFService validateCPFService;
-  private final ValidateCPF validateCPF;
 
   public PaginatedData<Vote> getAllVotesBySchedule(
       VoteSpecification specification, Pageable pageable)
@@ -83,9 +81,7 @@ public class VoteService {
     try {
       validateCPFService.checkCPF(associate.getCpf());
     } catch (Exception e) {
-      e.printStackTrace();
-      System.out.println(e.getMessage());
-      throw new NotExistsException("CPF inválido.");
+      throw new NotExistsException("Associado não está apto para votar.");
     }
 
     return voteRepository.save(VoteConverter.toEntity(vote, associate, schedule));
