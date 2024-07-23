@@ -4,13 +4,14 @@ import com.assemblyvote.exception.BadRequestException;
 import com.assemblyvote.exception.ExistsException;
 import com.assemblyvote.exception.NoValuePresentException;
 import com.assemblyvote.exception.NotExistsException;
+import com.assemblyvote.http.ValidateCPF;
+import com.assemblyvote.http.ValidateCPFService;
 import com.assemblyvote.models.dto.VoteDTO;
 import com.assemblyvote.models.entity.Associate;
 import com.assemblyvote.models.entity.Schedule;
 import com.assemblyvote.models.entity.Vote;
 import com.assemblyvote.models.enums.VoteMap;
 import com.assemblyvote.models.response.PaginatedData;
-import com.assemblyvote.models.response.ScheduleResponse;
 import com.assemblyvote.models.specification.VoteSpecification;
 import com.assemblyvote.repository.ScheduleRepository;
 import com.assemblyvote.repository.VoteRepository;
@@ -21,7 +22,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -32,6 +32,8 @@ public class VoteService {
   private final VoteRepository voteRepository;
   private final ScheduleRepository scheduleRepository;
   private final AssociateService associateService;
+  private final ValidateCPFService validateCPFService;
+  private final ValidateCPF validateCPF;
 
   public PaginatedData<Vote> getAllVotesBySchedule(
       VoteSpecification specification, Pageable pageable)
@@ -76,6 +78,14 @@ public class VoteService {
 
     if (verifyIfScheduleIsExpires(schedule)) {
       throw new BadRequestException("Sessão de votação encerrada.");
+    }
+
+    try {
+      validateCPFService.checkCPF(associate.getCpf());
+    } catch (Exception e) {
+      e.printStackTrace();
+      System.out.println(e.getMessage());
+      throw new NotExistsException("CPF inválido.");
     }
 
     return voteRepository.save(VoteConverter.toEntity(vote, associate, schedule));
