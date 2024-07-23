@@ -3,7 +3,7 @@ WORKDIR /usr/src/app
 COPY . .
 RUN mvn package -DskipTests
 
-FROM openjdk:21-jdk-slim
+FROM openjdk:21-oracle
 WORKDIR /usr/src/app
 COPY --from=maven /usr/src/app/target/assemblyvote-0.0.1-SNAPSHOT.jar app.jar
 EXPOSE 8080
