@@ -13,8 +13,15 @@ import { IScheduleProps } from "../../../models/schedule/schedule.interface";
 import { toastr } from "../../../services/toastr.service";
 
 const schema = yup.object().shape({
-  title: yup.string().required("O campo título é obrigatório"),
-  description: yup.string().required("O campo descrição é obrigatório"),
+  title: yup
+    .string()
+    .min(5, "Campo com no mínimo de 5 caracteres.")
+    .max(100, "Campo com no máximo de 100 caracteres.")
+    .required("O campo título é obrigatório"),
+  description: yup
+    .string()
+    .min(5, "Campo com no mínimo de 5 caracteres.")
+    .required("O campo descrição é obrigatório"),
   session: yup.object().shape({
     expiresIn: yup.number(),
   }),
