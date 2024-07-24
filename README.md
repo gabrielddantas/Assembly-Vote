@@ -1,6 +1,8 @@
 ## Rodar a aplicação
 
-#### Dependências
+### Dependências - Docker
+
+Guia de instalação para cada sistema.
 
 Windows:
 
@@ -20,7 +22,7 @@ Mac OS
 https://docs.docker.com/desktop/install/mac-install/
 ```
 
-#### Como rodar a aplicação
+### Como rodar a aplicação
 
 Para rodar a aplicação e suas dependências, basta copiar e colar no **CMD** o comando a seguir.
 
@@ -30,7 +32,7 @@ Para rodar a aplicação e suas dependências, basta copiar e colar no **CMD** o
   docker compose up -d
 ```
 
-#### Parar a aplicação
+### Parar a aplicação
 
 Para parar de rodar a aplicação, basta copiar e colar no **CMD** o comando a seguir.
 
