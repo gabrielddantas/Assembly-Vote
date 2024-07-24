@@ -1,4 +1,46 @@
-# Documentação
+## Rodar a aplicação
+
+#### Dependências
+
+Windows:
+
+```
+https://docs.docker.com/desktop/install/windows-install/
+```
+
+Linux:
+
+```
+https://docs.docker.com/desktop/install/linux-install/
+```
+
+Mac OS
+
+```
+https://docs.docker.com/desktop/install/mac-install/
+```
+
+#### Como rodar a aplicação
+
+Para rodar a aplicação e suas dependências, basta copiar e colar no **CMD** o comando a seguir.
+
+**Obs.:** O CMD precisa está no diretório do projeto, onde se encontra o arquivo **docker-compose.yml**
+
+```
+  docker compose up -d
+```
+
+#### Parar a aplicação
+
+Para parar de rodar a aplicação, basta copiar e colar no **CMD** o comando a seguir.
+
+**Obs.:** O CMD precisa está no diretório do projeto, onde se encontra o arquivo **docker-compose.yml**
+
+```
+  docker compose down
+```
+
+## Documentação
 
 ```
   http://localhost:8080/api/swagger-ui/index.html
