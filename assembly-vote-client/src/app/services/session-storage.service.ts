@@ -21,3 +21,7 @@ export const getStorageData = (key: string) => {
     return null;
   }
 };
+
+export const clearAllStorageData = () => {
+  sessionStorage.clear();
+};

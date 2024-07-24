@@ -4,12 +4,16 @@ import { AppBar, Toolbar, Typography } from "@mui/material";
 import { ContainerMobile, WrapperContent } from "./styles";
 import { colors } from "../../../styles/colors";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import {
+  clearAllStorageData,
   getStorageData,
   keyStorage,
 } from "../../services/session-storage.service";
+import { useNavigate } from "react-router-dom";
 
 export const Root = ({ children }: { children: JSX.Element }) => {
+  const navigate = useNavigate();
   const [associateName, setAssociateName] = React.useState<string>("");
 
   useEffect(() => {
@@ -24,6 +28,11 @@ export const Root = ({ children }: { children: JSX.Element }) => {
     }
 
     return "Usuário";
+  };
+
+  const logout = () => {
+    clearAllStorageData();
+    navigate("/login");
   };
 
   const getFirstAndLastName = (name: string) => {
@@ -49,6 +58,13 @@ export const Root = ({ children }: { children: JSX.Element }) => {
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
               {associateName}
             </Typography>
+            <ExitToAppIcon
+              onClick={logout}
+              sx={{
+                cursor: "pointer",
+                fontSize: 32,
+              }}
+            />
           </Toolbar>
         </AppBar>
         <WrapperContent>
