@@ -20,6 +20,7 @@ services:
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/db_assembly_vote
       - origin_validation=http://assembly-cpf-service:3001/api
+      - TZ=America/Sao_Paulo
     depends_on:
       db:
         condition: service_healthy
