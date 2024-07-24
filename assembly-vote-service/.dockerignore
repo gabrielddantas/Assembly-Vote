@@ -1,0 +1,8 @@
+Dockerfile
+.idea
+.mvn
+readme
+target
+src/test
+.gitignore
+.dockerignore
